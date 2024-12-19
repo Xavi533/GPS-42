@@ -1,3 +1,6 @@
+"""
+Este módulo contiene pruebas unitarias para verificar las funciones de transformación de texto.
+"""
 
 import unittest
 import transform
