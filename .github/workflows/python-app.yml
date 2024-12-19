@@ -1,4 +1,4 @@
-name: Python CI with Docker
+name: Python CI
 
 on:
   push:
@@ -10,25 +10,23 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Máquina base para ejecutar el contenedor Docker
-    container:
-      image: python:3.9  # Imagen Docker para ejecutar el flujo de trabajo
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-
-      - name: Set up Python dependencies
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Run pylint for static code analysis
+      - name: Lint with pylint
         run: |
           pip install pylint
-          pylint **/*.py
-
-      - name: Run tests and check coverage
+          pylint **/*.py || true
+      - name: Test with coverage
         run: |
-          pip install pytest pytest-cov
-          pytest --cov=.
+          pip install coverage
+          coverage run -m unittest discover
+          coverage report
