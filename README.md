@@ -1,2 +1,2 @@
 # GPS-42
-De momento nada
+Repositorio público para la pràctica de integración continua del grupo 42 de GPS
